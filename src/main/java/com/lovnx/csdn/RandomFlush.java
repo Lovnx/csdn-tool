@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,7 +19,7 @@ public class RandomFlush {
 	
 	private static Integer blogLength = 0;
 	
-	private static int count = 0;
+	private static AtomicInteger COUNT = new AtomicInteger(0);;
 	
 	static {
 		IP = ReadExcelIntoMemory.readIP();
@@ -52,8 +53,7 @@ public class RandomFlush {
 							.timeout(new Random().nextInt(3000))
 							.get();
 				if (doc != null) {
-					count++;
-					System.out.println("成功刷新次数: " + count);
+					System.out.println("成功刷新次数: " + COUNT.incrementAndGet());
 					System.out.println(ip + " -->>访问-->> " + "" + blog);
 				}
 			} catch (IOException e) {
